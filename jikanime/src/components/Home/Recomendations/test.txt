@@ -1,0 +1,86 @@
+import { Box, Flex, Text, Image, VStack, Button, Card, CardBody, Heading, useColorModeValue, Stack, Grid } from "@chakra-ui/react";
+import axios from 'axios';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { colors } from "../../../assets/Colors/colors";
+import star from './star-svgrepo-com.svg';
+
+
+const Recomendations = () => {
+    const [data, setData] = useState([]);
+    const navigate = useNavigate();
+
+    const fetchData = async () => {
+        try {
+            const response = await axios.get(
+                `https://api.jikan.moe/v4/seasons/now`
+            );
+            console.log(response?.data);
+            setData(response?.data?.data);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    return (
+        <>
+            <Box bgSize='cover'>
+            <Stack textColor={colors.text} direction='row' flexWrap='wrap' p='10px' justifyContent={{base: 'center', md: 'flex-start'}}>
+        <Grid
+        templateColumns={{base: 'repeat(2, 1fr)', md: 'repeat(5, 1fr)'}}
+        
+        w={'fit-content'}
+        gap={5}
+      >
+                {data?.map((item, index) => (
+                    <>
+                        <Card textColor={colors?.text} key={item.id} onClick={() => handleItemClick(item.id)} bgImage={item?.images?.jpg?.large_image_url}
+                            boxShadow='0px 1px 5px gray'>
+                            {/* <Image
+                                    key={item?.images?.jpg?.large_image_url}
+                                    src={item?.images?.jpg?.large_image_url}
+                                    alt={item.title}
+                                    objectFit='cover'
+                                    width='100%'
+                                    height='200px'
+                                    borderRadius='3px 3px 10px 10px'
+                                    justifySelf='center'
+                                    /> */}
+                                <CardBody>
+                                    <Stack mt='-3' spacing='0'>
+                                    <Heading size="sm" width="180px" flexWrap='wrap'>
+                                        {item.title}
+                                        </Heading>
+                                        <Flex dir="row" gap="1" flexWrap="wrap">
+                                        <Text fontSize="xs" mt="5px">
+                                            {item?.status}
+                                        </Text>
+                                        <Text fontSize="xs" mt="5px">
+                                            {item?.rating}
+                                        </Text>
+                                        </Flex>
+                                        <Flex dir='row' mt='5px'>
+                                        <Image boxSize='17px' src={star} />
+                                        <Text fontSize='xs' fontWeight='bold'>{item?.score}/10.0 ({item?.scored_by})</Text>
+                                        </Flex>
+
+                                    {/* <Button width='100%' variant='solid' borderRadius='10px' bgColor='#286043' color='white' onClick={() => navigate(`/product-detail/${item?.ProductStocks[0]?.id}` )}>
+                                        Beli
+                                    </Button> */}
+                                    </Stack>
+                                </CardBody>
+                            </Card>
+                    </>
+                ))}
+                 </Grid>
+      </Stack>
+            </Box>
+        </>
+    )
+}
+
+export default Recomendations;
