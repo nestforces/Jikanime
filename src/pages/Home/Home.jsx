@@ -51,7 +51,7 @@ const Home = () => {
       // For example:
       // const response = await axios.get('topAnimeApiEndpoint');
       // setDataForTopAnime(response.data);
-      setTopAnimeLoaded(true);
+        setTopAnimeLoaded(true);
     } catch (error) {
       console.error('Error fetching data for TopAnime:', error);
     }
@@ -69,7 +69,7 @@ const Home = () => {
       // For example:
       // const response = await axios.get('recomendationsApiEndpoint');
       // setDataForRecomendations(response.data);
-      setRecomendationsLoaded(true);
+        setRecomendationsLoaded(true);
     } catch (error) {
       console.error('Error fetching data for Recomendations:', error);
     }
@@ -87,7 +87,7 @@ const Home = () => {
       // For example:
       // const response = await axios.get('recomendationsApiEndpoint');
       // setDataForRecomendations(response.data);
-      setAiringNowLoaded(true);
+        setAiringNowLoaded(true);
     } catch (error) {
       console.error('Error fetching data for Recomendations:', error);
     }
@@ -107,11 +107,16 @@ const Home = () => {
       // For example:
       // const response = await axios.get('upcomingApiEndpoint');
       // setDataForUpcoming(response.data);
-      setUpcomingLoaded(true);
+        setUpcomingLoaded(true);
     } catch (error) {
       console.error('Error fetching data for Upcoming:', error);
     }
   };
+
+  console.log("topAnimeLoaded", topAnimeLoaded);
+  console.log("recomendationsLoaded", recomendationsLoaded);
+  console.log("airingNowLoaded", airingNowLoaded);
+  console.log("upcomingLoaded", upcomingLoaded);
 
   return (
     <>
