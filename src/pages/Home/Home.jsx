@@ -119,11 +119,6 @@ const Home = () => {
     }
   };
 
-  console.log("topAnimeLoaded", topAnimeLoaded);
-  console.log("recomendationsLoaded", recomendationsLoaded);
-  console.log("airingNowLoaded", airingNowLoaded);
-  console.log("upcomingLoaded", upcomingLoaded);
-
   return (
     <>
       <Box backgroundColor={colors.background} width='100vw' height='full'>\
