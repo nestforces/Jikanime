@@ -142,7 +142,7 @@ useEffect(() => {
       <Box id='topsection'>
         <TopBox data={data} />
           </Box>
-        <Box maxWidth='100vw' p='20px'>
+        <Box maxWidth='100vw' mt='20px'>
           <BottomBox data={data} />
         </Box>
       </Box>

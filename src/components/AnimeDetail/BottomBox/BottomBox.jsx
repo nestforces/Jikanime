@@ -54,12 +54,12 @@ console.log("ini data1", data1[0]?.character?.name);
         direction={{ base: 'column', md: 'row', sm: 'column' }}
         alignItems={{ base: 'center', sm: 'center' }}
         height="fit-content"
-        mt={{ md: '-5%' }}
+        mt={{ md: '-7%' }}
         position='relative'
-        margin='auto'
+        // margin='auto'
         alignItems='flex-start'
         textColor={colors.text}
-        padding={{base: '1%', md: '4%'}}
+        padding={{base: '0%', md: '4%'}}
       >
         <Flex
           flexDirection={'column'}

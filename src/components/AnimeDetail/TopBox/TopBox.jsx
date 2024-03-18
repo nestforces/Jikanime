@@ -7,6 +7,8 @@ import axios from 'axios'
 import { colors } from '../../../assets/Colors/colors'
 import star from './star-svgrepo-com.svg';
 import { FaRegCirclePlay } from "react-icons/fa6";
+import { Grid } from 'swiper/modules'
+import { Navigate } from 'react-router-dom'
 
 const TopBox = ({data}) => {
     // console.log(data);
@@ -14,11 +16,21 @@ const TopBox = ({data}) => {
 
     return(
         <Flex position='relative' minHeight='100%' textColor={colors.text} padding={{base: '0px', md: '5%'}} mt={{base: '-5px', md: '-40px', sm: '-5%'}} direction={{base: 'column', md:'row', sm:'column'}}>
-            <Box mb={{base: '10px'}} position={{base: 'sticky'}} top={{base: '20px'}} width={{base: '100%', md: '65%', sm:'100%'}}>
-            <Box width={{base: '100vw'}}  position='sticky' top={'20px'}>
+            <Box mb={{base: '10px', base: '0px'}} position={{base: 'sticky'}} top={{base: '20px'}} width={{base: '100%', md: '65%', sm:'100%'}}>
+            <Box width={{base: '100vw', md: '100%'}}  position='sticky' top={'20px'}>
                 <Image  zIndex='1' borderRadius={{base: '0px', md: '10px'}} src={data?.trailer?.images?.maximum_image_url} />
                 <Box position='absolute' top='50%' left='50%' transform='translate(-50%, -50%)'>
                     <Text fontSize='xxx-large' onClick={() => setSelectedTrailer(data?.trailer?.embed_url)} textColor={colors.primary} cursor='pointer' _hover={{textColor: `${colors.text}`}}><FaRegCirclePlay /></Text>
+                </Box>
+                <Box mt='10px' p='10px' boxShadow="0px 1px 5px gray" bg={colors.backgroundcard} borderRadius='10px'>
+                    <Text>Streaming : </Text>
+                   <Flex gap='10px' flexDirection='row' flexWrap='wrap'>
+                   {data?.streaming?.length > 0 && data?.streaming?.map((item, index) => (
+                        <Text cursor='pointer' textColor={'aqua'} _hover={{textColor: `${colors.text}`}} onClick={() => window.open(`${item?.url}`, "_blank")}>
+                            ● {item?.name}
+                        </Text>
+                    ))}
+                   </Flex>
                 </Box>
             </Box>
             </Box>
@@ -37,7 +49,7 @@ const TopBox = ({data}) => {
                     ml={{md:'10%', sm:'0%'}}
                     // mb={{md: '50px', sm:'10px'}}
                     >
-                        <Box mb={{md: '50px', sm:'15px'}} >
+                        <Box >
                         <Image
                                         key={data?.images?.jpg?.large_image_url}
                                         src={data?.images?.jpg?.large_image_url}

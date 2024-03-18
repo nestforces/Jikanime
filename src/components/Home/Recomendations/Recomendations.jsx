@@ -40,7 +40,7 @@ const Recomendations = () => {
                 {data?.map((item, index) => (
                     <>
                         <Box>
-                        <Card width='230px' height='300px' textColor={colors?.text} key={item.mal_id} bgSize='cover' bgImage={item?.images?.jpg?.large_image_url}
+                        <Card onClick={() => navigate(`anime-detail/${item?.mal_id}`)} width='230px' height='300px' textColor={colors?.text} key={item.mal_id} bgSize='cover' bgImage={item?.images?.jpg?.large_image_url}
                             // boxShadow='0px 1px 5px white' 
                             >
                                 <CardBody  bgColor='rgba(0, 0, 0, 0.4)'
