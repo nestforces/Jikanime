@@ -69,6 +69,7 @@ button:focus-visible {
 
 body {
   scrollbar-width: none;
+  background-color: "#000000";
 }
 
 body::-webkit-scrollbar {
