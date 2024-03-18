@@ -51,7 +51,9 @@ const Home = () => {
       // For example:
       // const response = await axios.get('topAnimeApiEndpoint');
       // setDataForTopAnime(response.data);
+      setTimeout(() => {
         setTopAnimeLoaded(true);
+      }, 2000);
     } catch (error) {
       console.error('Error fetching data for TopAnime:', error);
     }
@@ -69,7 +71,9 @@ const Home = () => {
       // For example:
       // const response = await axios.get('recomendationsApiEndpoint');
       // setDataForRecomendations(response.data);
+      setTimeout(() => {
         setRecomendationsLoaded(true);
+      }, 2000);
     } catch (error) {
       console.error('Error fetching data for Recomendations:', error);
     }
@@ -87,7 +91,9 @@ const Home = () => {
       // For example:
       // const response = await axios.get('recomendationsApiEndpoint');
       // setDataForRecomendations(response.data);
+      setTimeout(() => {
         setAiringNowLoaded(true);
+      }, 2000);
     } catch (error) {
       console.error('Error fetching data for Recomendations:', error);
     }
