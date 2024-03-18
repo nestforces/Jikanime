@@ -12,7 +12,7 @@ function App() {
   return (
     <>
         <Routes>
-          <Route path = '/Jikanime' element={<Home />}/>
+          <Route path = '/' element={<Home />}/>
           <Route path = '/anime-detail/:id' element={<AnimeDetail />}/>
         </Routes>
     </>
