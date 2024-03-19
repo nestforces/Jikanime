@@ -137,7 +137,7 @@ useEffect(() => {
 
   return (
     <>
-      <Box backgroundColor={colors.background} width='100vw' height='full'>\
+      <Box backgroundColor={colors.background} margin='auto' width='100vw' justifyContent='center' height='full'>\
         <Navbar isTopSection={isTopSection}/>
       <Box id='topsection'>
         <TopBox data={data} />

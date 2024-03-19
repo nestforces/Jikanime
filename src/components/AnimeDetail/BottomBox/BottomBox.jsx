@@ -9,10 +9,14 @@ import { useNavigate } from 'react-router-dom';
 import {useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter} from '@chakra-ui/react'
 import { colors } from '../../../assets/Colors/colors';
 // import { ReactComponent as MySVG } from './ic_voucher.svg';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from 'swiper/modules';
+import 'swiper/css';
 
 const BottomBox = ({data}) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [data1, setData1] = useState([])
+  const [data1, setData1] = useState([]);
+  const [data2, setData2] = useState([]);
   const navigate = useNavigate();
   console.log(data?.mal_id);
   const [isSynopsisExpanded, setIsSynopsisExpanded] = useState(false);
@@ -34,6 +38,10 @@ const BottomBox = ({data}) => {
       const response = await axios.get(`https://api.jikan.moe/v4/anime/${mal_id}/characters`);
       console.log(response?.data);
       setData1(response?.data?.data);
+      const response1 = await axios.get(`https://api.jikan.moe/v4/anime/${mal_id}/pictures`);
+      console.log("data2",response1?.data);
+      setData2(response1?.data?.data);
+
     } catch (err) {
       console.log(err);
     }
@@ -47,7 +55,7 @@ const BottomBox = ({data}) => {
 
 
 
-console.log("ini data1", data1[0]?.character?.name);
+console.log("ini data", data);
   return (
     <>
       <Flex
@@ -91,7 +99,7 @@ console.log("ini data1", data1[0]?.character?.name);
                 }}
                 width='100%'
               >
-                <Text>DESCRIPTION</Text>
+                <Text>INFORMATION</Text>
               </Tab>
               <Tab
                 _selected={{
@@ -134,19 +142,42 @@ console.log("ini data1", data1[0]?.character?.name);
                   </Box>
                   <Heading size='md'>Genres</Heading>
                 </HStack>
-                <HStack>
-                    {data?.data?.category.length > 0 && data?.data?.category.map((item) => (
-                    <Box key={item.name} borderRadius='5px' bgColor='blue' textColor='white' pl='5px' pr='5px' w='fit-content'>
-                        <Text>{item.name}</Text>
-                    </Box>
-                    ))}
+                <Flex gap='10px' flexDirection='row' flexWrap='wrap'>
                     {data?.genres?.length > 0 && data?.genres.map((item) => (
-                    <Box key={item.name} borderRadius='10px' bgColor={colors.darker} textColor='white' pl='5px' pr='5px' w='fit-content'>
+                    <Box key={item.name} borderRadius='10px' p='5px' bgColor={colors.darker} textColor='white' pl='5px' pr='5px' w='fit-content'>
                         <Text>{item.name}</Text>
                     </Box>
                     ))}
 
+                </Flex>
+                <HStack mb='10px' mt='20px'>
+                  <Box bg={colors.secondary} width='7px' color={colors.secondary} borderRadius='0px 10px 0px 10px'>
+                    |
+                  </Box>
+                  <Heading size='md'>Opening's</Heading>
                 </HStack>
+                <Flex gap='10px' flexDirection='column' flexWrap='wrap'>
+                    {data?.theme?.openings?.length > 0 && data?.theme?.openings?.map((item, index) => (
+                    <Box key={index} borderRadius='10px' p='5px' bgColor={colors.darker} textColor='white' pl='5px' pr='5px' w='fit-content'>
+                        <Text>{item}</Text>
+                    </Box>
+                    ))}
+
+                </Flex>
+                <HStack mb='10px' mt='20px'>
+                  <Box bg={colors.secondary} width='7px' color={colors.secondary} borderRadius='0px 10px 0px 10px'>
+                    |
+                  </Box>
+                  <Heading size='md'>Ending's</Heading>
+                </HStack>
+                <Flex gap='10px' flexDirection='column' flexWrap='wrap'>
+                    {data?.theme?.endings?.length > 0 && data?.theme?.endings?.map((item, index) => (
+                    <Box key={index} borderRadius='10px' p='5px' bgColor={colors.darker} textColor='white' pl='5px' pr='5px' w='fit-content'>
+                        <Text>{item}</Text>
+                    </Box>
+                    ))}
+
+                </Flex>
               </TabPanel>
               <TabPanel>
               <Grid gridRowGap='50px' templateColumns="repeat(auto-fill, minmax(100px, 1fr))">
@@ -208,7 +239,7 @@ console.log("ini data1", data1[0]?.character?.name);
         </Flex>
         <VStack
           width={{ md: '35%', sm: '100%', base: '100%' }}
-          p='5%'
+          // p='5%'
           top='20px'
           position='sticky'
         >
@@ -217,14 +248,48 @@ console.log("ini data1", data1[0]?.character?.name);
             p={6}
             maxW={{ md: '330px', sm: '100%' }}
             w={'full'}
-            bg={useColorModeValue('white', 'gray.800')}
+            mt={{base: '20px', md: '0px'}}
+            bg={colors.backgroundcard}
             boxShadow='0px 1px 5px gray'
             rounded='lg'
             pos='relative'
             zIndex={1}
             mb='40px'
           >
-            
+            <Text>Pictures</Text>
+              <Swiper
+                    slidesPerView={1}
+                    autoplay={{
+                    delay: 2500,
+                    disableOnInteraction: false,
+                    }}
+                    spaceBetween={30}
+                    loop={true}
+                    className="mySwiper"
+                    modules={[Autoplay]}
+                    style={{
+                    height: '400px',
+                    borderRadius: '10px',
+                    width: '100%',
+                    transition: 'width .2s ease-in-out',
+                    }}
+                >
+                    {data2?.map((item, index) => {
+                    return (
+                        <SwiperSlide
+                        key={index}
+                        style={{
+                            // height: {base: 'fit-content', md: '400px'},
+                            backgroundImage: `url(${item?.jpg?.large_image_url})`,
+                            backgroundSize: 'cover',
+                            backgroundRepeat: 'no-repeat',
+                            transition: 'width .1s ease-in-out',
+                        }}
+                        >
+                        </SwiperSlide>
+                    );
+                    })}
+                </Swiper>
           </Box> 
           <Box>
             <Text mb='10px'>Bagikan Event</Text>
