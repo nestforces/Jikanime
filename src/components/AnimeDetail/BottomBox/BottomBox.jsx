@@ -60,12 +60,13 @@ console.log("ini data", data);
     <>
       <Flex
         direction={{ base: 'column', md: 'row', sm: 'column' }}
-        alignItems={{ base: 'center', sm: 'center' }}
+        alignItems={{ base: 'center', sm: 'flex-start' }}
         height="fit-content"
         mt={{ md: '-7%' }}
         position='relative'
-        // margin='auto'
-        alignItems='flex-start'
+        marginLeft='auto'
+        marginRight='auto'
+        width='100%'
         textColor={colors.text}
         padding={{base: '0%', md: '4%'}}
       >
@@ -246,17 +247,16 @@ console.log("ini data", data);
           <Box
             role={'group'}
             p={6}
-            maxW={{ md: '330px', sm: '100%' }}
-            w={'full'}
+            maxW={{ md: '360px', sm: '100%' }}
             mt={{base: '20px', md: '0px'}}
             bg={colors.backgroundcard}
             boxShadow='0px 1px 5px gray'
             rounded='lg'
             pos='relative'
             zIndex={1}
-            mb='40px'
+            // mb='40px'
           >
-            <Text>Pictures</Text>
+            <Text fontWeight='bold'>Pictures</Text>
               <Swiper
                     slidesPerView={1}
                     autoplay={{
@@ -268,8 +268,7 @@ console.log("ini data", data);
                     className="mySwiper"
                     modules={[Autoplay]}
                     style={{
-                    height: '400px',
-                    borderRadius: '10px',
+                    // height: '470px',
                     width: '100%',
                     transition: 'width .2s ease-in-out',
                     }}
@@ -280,12 +279,13 @@ console.log("ini data", data);
                         key={index}
                         style={{
                             // height: {base: 'fit-content', md: '400px'},
-                            backgroundImage: `url(${item?.jpg?.large_image_url})`,
-                            backgroundSize: 'cover',
+                            // backgroundImage: `url(${item?.jpg?.large_image_url})`,
+                            // backgroundSize: 'contain',
                             backgroundRepeat: 'no-repeat',
                             transition: 'width .1s ease-in-out',
                         }}
                         >
+                          <Image borderRadius='10px' src={item?.jpg?.large_image_url} />
                         </SwiperSlide>
                     );
                     })}
@@ -294,12 +294,12 @@ console.log("ini data", data);
           <Box>
             <Text mb='10px'>Bagikan Event</Text>
             <HStack>
-              <FacebookShareButton url={`${window.location.href}`} quote={'Kunjungi Event Bersamaku!'} hashtag='#ticketing'>
+              <FacebookShareButton url={`${window.location.href}`} quote={'Check out these awesome anime! 🎉📺 #Anime #Recommendations'} hashtag='#ticketing'>
                 <Button colorScheme='facebook' leftIcon={<FaFacebook />}>
                   Facebook
                 </Button>
               </FacebookShareButton>
-              <TwitterShareButton url={`${window.location.href}`} quote={'Kunjungi Event Bersamaku!'} hashtag='#ticketing'>
+              <TwitterShareButton url={`${window.location.href}`} quote={'Check out these awesome anime! 🎉📺 #Anime #Recommendations'} hashtag='#ticketing'>
                 <Button colorScheme='twitter' leftIcon={<FaTwitter />}>
                   Twitter
                 </Button>

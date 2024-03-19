@@ -16,9 +16,9 @@ const TopBox = ({data}) => {
 
     return(
         <Flex position='relative' minHeight='100%' textColor={colors.text} padding={{base: '0px', md: '5%'}} mt={{base: '-5px', md: '-40px', sm: '-5%'}} direction={{base: 'column', md:'row', sm:'column'}}>
-            <Box mb={{base: '10px', base: '0px'}} position={{base: 'sticky'}} top={{base: '20px'}} width={{base: '100%', md: '65%', sm:'100%'}}>
+            <Box mb={{base: '10px', md: '0px'}} position={{base: 'sticky'}} top={{base: '20px'}} width={{base: '100%', md: '65%', sm:'100%'}}>
             <Box width={{base: '100vw', md: '100%'}}  position='sticky' top={'20px'}>
-                <Image  zIndex='1' borderRadius={{base: '0px', md: '10px'}} src={data?.trailer?.images?.maximum_image_url} />
+                <Image  zIndex='1' borderRadius={{base: '0px', md: '10px'}} height={data?.trailer?.images?.maximum_image_url != null ? 'fit-content' : '400px'} objectFit={data?.trailer?.images?.maximum_image_url != null ? 'fill' : 'cover'} width='100%' src={data?.trailer?.images?.maximum_image_url != null ? data?.trailer?.images?.maximum_image_url : data?.images?.jpg?.large_image_url} />
                 <Box position='absolute' top='50%' left='50%' transform='translate(-50%, -50%)'>
                     <Text fontSize='xxx-large' onClick={() => setSelectedTrailer(data?.trailer?.embed_url)} textColor={colors.primary} cursor='pointer' _hover={{textColor: `${colors.text}`}}><FaRegCirclePlay /></Text>
                 </Box>
