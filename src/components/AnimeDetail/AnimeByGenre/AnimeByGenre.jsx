@@ -15,12 +15,23 @@ const AnimeByGenre = ({genreId}) => {
     const navigate = useNavigate();
     const [selectedTrailer, setSelectedTrailer] = useState("");
     const genreIds = genreId?.map(entry => entry?.mal_id); // Extract mal_id values
+    // const firstThreeGenreIds = genreIds?.slice(0, 3);
+    
+    // Shuffle the array randomly
+    const shuffledIds = genreIds?.sort(() => Math.random() - 0.5);
+
+    // Extract mal_id values from the first 3 entries
+    const randomEntries = shuffledIds?.slice(0, 3)?.map(entry => entry);
+    console.log(randomEntries)
 
     const fetchData = async () => {
         try {
-            const genreIdsString = genreIds?.join(',');
+            // const genreIdsString = genreIds?.join(',');
             const response = await axios.get(
-                `https://api.jikan.moe/v4/anime?genres=${genreIdsString}`
+                `https://api.jikan.moe/v4/anime?genres=${randomEntries}`,
+                {
+                    timeout: 2000 // Timeout in milliseconds (e.g., 5000 = 5 seconds)
+                }
             );
             setData(response?.data?.data);
         } catch (err) {
@@ -38,6 +49,7 @@ const AnimeByGenre = ({genreId}) => {
     return (
         <>
             <Box p='10px'>
+                <Text fontWeight='bold' mb='5px' fontSize='x-large' textColor={colors.text}>Same Anime By Genres</Text>
         <Flex
         flexDirection='row'
         style={{ msOverflowStyle: 'none' }}
@@ -48,7 +60,7 @@ const AnimeByGenre = ({genreId}) => {
       >
                 {data?.map((item, index) => (
                     <>
-                        <Box>
+                        <Box key={index}>
                         <Card onClick={(event) => { event.preventDefault(); navigate(`/anime-detail/${item?.mal_id}`); window.location.reload()}} width='230px' height='300px' textColor={colors?.text} key={item.mal_id} bgSize='cover' bgImage={item?.images?.jpg?.large_image_url}
                             >
                                 <CardBody  bgColor='rgba(0, 0, 0, 0.4)'

@@ -13,13 +13,18 @@ import { Navigate } from 'react-router-dom'
 const TopBox = ({data}) => {
     // console.log(data);
     const [selectedTrailer, setSelectedTrailer] = useState("");
+    const [isBackgroundExpanded, setIsBackgroundExpanded] = useState(false);
+
+    const toggleBackground = () => {
+        setIsBackgroundExpanded(!isBackgroundExpanded);
+      };
 
     return(
         <Flex position='relative' minHeight='100%' textColor={colors.text} padding={{base: '0px', md: '5%'}} mt={{base: '-5px', md: '-40px', sm: '-5%'}} direction={{base: 'column', md:'row', sm:'column'}}>
             <Box mb={{base: '10px', md: '0px'}} position={{base: 'sticky'}} top={{base: '20px'}} width={{base: '100%', md: '65%', sm:'100%'}}>
             <Box width={{base: '100vw', md: '100%'}}  position='sticky' top={'20px'}>
                 <Image  zIndex='1' borderRadius={{base: '0px', md: '10px'}} height={data?.trailer?.images?.maximum_image_url != null ? 'fit-content' : '400px'} objectFit={data?.trailer?.images?.maximum_image_url != null ? 'fill' : 'cover'} width='100%' src={data?.trailer?.images?.maximum_image_url != null ? data?.trailer?.images?.maximum_image_url : data?.images?.jpg?.large_image_url} />
-                <Box position='absolute' top='50%' left='50%' transform='translate(-50%, -50%)'>
+                <Box position='absolute' top='35%' left='50%' transform='translate(-50%, -50%)'>
                     <Text fontSize='xxx-large' onClick={() => setSelectedTrailer(data?.trailer?.embed_url)} textColor={colors.primary} cursor='pointer' _hover={{textColor: `${colors.text}`}}><FaRegCirclePlay /></Text>
                 </Box>
                 <Box mt='10px' p='10px' boxShadow="0px 1px 5px gray" bg={colors.backgroundcard} borderRadius='10px'>
@@ -30,14 +35,23 @@ const TopBox = ({data}) => {
                             ● {item?.name}
                         </Text>
                     ))}
+                    {data?.streaming?.length > 0 ? null : <Text>No media streaming online</Text> }
+                    
                    </Flex>
+                   <Text>Background : </Text>
+                    <Text>
+                    {isBackgroundExpanded ? data?.background : `${data?.background?.substring(0, 90)}...`}
+                    <Text cursor='pointer' textColor={colors.secondary} colorScheme="blue" variant="link" onClick={toggleBackground} ml="2">
+                        {isBackgroundExpanded ? 'Read Less' : 'Read More'} </Text>
+                    </Text>
                 </Box>
             </Box>
             </Box>
-            <Box width={{md: '35%', sm: '100%', base: '100%'}}>
+            <Box display='flex' justifyContent='center' width={{md: '35%', sm: '100%', base: '100%'}}>
             <Box role={'group'}
+                    margin='auto'
                     p={6}
-                    maxW={{md: '330px', sm: '100%'}}
+                    maxW={{md: '100%', sm: '100%'}}
                     w={'full'}
                     // bg={useColorModeValue('white', 'gray.800')}
                     bg={colors.backgroundcard}
@@ -63,6 +77,7 @@ const TopBox = ({data}) => {
                                         />
                         <Heading as='h4' size='md' mb='5px'>{data?.title}</Heading>
                         <Text>Rank : #{data?.rank}</Text>
+                        <Text>Popularity : #{data?.popularity}</Text>
                         <Text>{data?.rating}</Text>
                         <Flex flexDirection='row' gap='5px'><Image boxSize='23px' src={star} /><Text>{data?.score}/10.0 ({data?.scored_by})</Text></Flex>
                         <Text>Status : {data?.status}</Text>

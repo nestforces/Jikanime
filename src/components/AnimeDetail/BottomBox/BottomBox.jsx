@@ -22,6 +22,8 @@ const BottomBox = ({data}) => {
   const [isSynopsisExpanded, setIsSynopsisExpanded] = useState(false);
   const mal_id = data?.mal_id;
   const [displayedCharacters, setDisplayedCharacters] = useState(6);
+  const [displayedOpenings, setDisplayedOpenings] = useState(5);
+  const [displayedEndings, setDisplayedEndings] = useState(5);
 
   const handleLoadMore = () => {
     // Increase the number of displayed characters by 12 when the button is clicked
@@ -38,9 +40,15 @@ const BottomBox = ({data}) => {
       const response = await axios.get(`https://api.jikan.moe/v4/anime/${mal_id}/characters`);
       console.log(response?.data);
       setData1(response?.data?.data);
-      const response1 = await axios.get(`https://api.jikan.moe/v4/anime/${mal_id}/pictures`);
-      console.log("data2",response1?.data);
-      setData2(response1?.data?.data);
+      setTimeout(async () => { // Add async keyword here
+        try {
+          const response1 = await axios.get(`https://api.jikan.moe/v4/anime/${mal_id}/pictures`);
+          console.log("data2", response1?.data);
+          setData2(response1?.data?.data);
+        } catch (err) {
+          console.log(err);
+        }
+      }, 1000);
 
     } catch (err) {
       console.log(err);
@@ -66,6 +74,7 @@ console.log("ini data", data);
         position='relative'
         marginLeft='auto'
         marginRight='auto'
+        gap='30px'
         width='100%'
         textColor={colors.text}
         padding={{base: '0%', md: '4%'}}
@@ -126,7 +135,18 @@ console.log("ini data", data);
 
             <TabPanels>
               <TabPanel>
-                <HStack>
+              <HStack>
+                  <Box bg={colors.secondary} width='7px' color={colors.secondary} borderRadius='0px 10px 0px 10px'>
+                    |
+                  </Box>
+                  <Heading size='md'>Aired</Heading>
+                </HStack>
+                <Flex gap='5px' flexDirection='column' flexWrap='wrap'>
+                    <Text>Date : {data?.aired?.string}</Text>
+                    <Text>Broadcast : {data?.type + " / "}  {data?.broadcast?.string} {data?.broadcast?.timezone}</Text>
+
+                </Flex>
+                <HStack mb='10px' mt='20px'>
                   <Box bg={colors.secondary} width='7px' color={colors.secondary} borderRadius='0px 10px 0px 10px'>
                     |
                   </Box>
@@ -158,13 +178,18 @@ console.log("ini data", data);
                   <Heading size='md'>Opening's</Heading>
                 </HStack>
                 <Flex gap='10px' flexDirection='column' flexWrap='wrap'>
-                    {data?.theme?.openings?.length > 0 && data?.theme?.openings?.map((item, index) => (
-                    <Box key={index} borderRadius='10px' p='5px' bgColor={colors.darker} textColor='white' pl='5px' pr='5px' w='fit-content'>
+                  {data?.theme?.openings?.length > 0 &&
+                    data?.theme?.openings?.slice(0, displayedOpenings).map((item, index) => (
+                      <Box key={index} borderRadius='10px' p='5px' bgColor={colors.darker} textColor='white' pl='5px' pr='5px' w='fit-content'>
                         <Text>{item}</Text>
-                    </Box>
+                      </Box>
                     ))}
-
                 </Flex>
+                {displayedOpenings < data?.theme?.openings?.length && (
+                  <Button mt='10px' textColor='white' _hover={{ textColor: `${colors.secondary}`, backgroundColor: 'white' }} backgroundColor={colors.secondary} width='full' onClick={() => setDisplayedOpenings(displayedOpenings + 5)}>
+                    Load More
+                  </Button>
+                )}
                 <HStack mb='10px' mt='20px'>
                   <Box bg={colors.secondary} width='7px' color={colors.secondary} borderRadius='0px 10px 0px 10px'>
                     |
@@ -172,13 +197,18 @@ console.log("ini data", data);
                   <Heading size='md'>Ending's</Heading>
                 </HStack>
                 <Flex gap='10px' flexDirection='column' flexWrap='wrap'>
-                    {data?.theme?.endings?.length > 0 && data?.theme?.endings?.map((item, index) => (
-                    <Box key={index} borderRadius='10px' p='5px' bgColor={colors.darker} textColor='white' pl='5px' pr='5px' w='fit-content'>
+                  {data?.theme?.endings?.length > 0 &&
+                    data?.theme?.endings?.slice(0, displayedEndings).map((item, index) => (
+                      <Box key={index} borderRadius='10px' p='5px' bgColor={colors.darker} textColor='white' pl='5px' pr='5px' w='fit-content'>
                         <Text>{item}</Text>
-                    </Box>
+                      </Box>
                     ))}
-
                 </Flex>
+                {displayedEndings < data?.theme?.endings?.length && (
+                  <Button mt='10px' textColor='white' _hover={{ textColor: `${colors.secondary}`, backgroundColor: 'white' }} backgroundColor={colors.secondary} width='full' onClick={() => setDisplayedEndings(displayedEndings + 5)}>
+                    Load More
+                  </Button>
+                )}
               </TabPanel>
               <TabPanel>
               <Grid gridRowGap='50px' templateColumns="repeat(auto-fill, minmax(100px, 1fr))">
@@ -238,8 +268,9 @@ console.log("ini data", data);
             </TabPanels>
           </Tabs>
         </Flex>
-        <VStack
-          width={{ md: '35%', sm: '100%', base: '100%' }}
+        <Box
+          width={{ md: '35%', base: '100%' }}
+          // maxW='360px'
           // p='5%'
           top='20px'
           position='sticky'
@@ -247,53 +278,49 @@ console.log("ini data", data);
           <Box
             role={'group'}
             p={6}
-            maxW={{ md: '360px', sm: '100%' }}
+            maxW={{ md: '100%', base: '100%' }}
             mt={{base: '20px', md: '0px'}}
             bg={colors.backgroundcard}
             boxShadow='0px 1px 5px gray'
             rounded='lg'
             pos='relative'
-            zIndex={1}
+            // zIndex={1}
             // mb='40px'
           >
-            <Text fontWeight='bold'>Pictures</Text>
+            <Text fontWeight='bold' textAlign='center' mb='10px'>Pictures</Text>
+            {data2?.length > 0 ? (
               <Swiper
-                    slidesPerView={1}
-                    autoplay={{
-                    delay: 2500,
-                    disableOnInteraction: false,
-                    }}
-                    spaceBetween={30}
-                    loop={true}
-                    className="mySwiper"
-                    modules={[Autoplay]}
+                slidesPerView={1}
+                autoplay={{
+                  delay: 2500,
+                  disableOnInteraction: false,
+                }}
+                spaceBetween={30}
+                loop={true}
+                className="mySwiper"
+                modules={[Autoplay]}
+                style={{
+                  transition: 'width .2s ease-in-out',
+                }}
+              >
+                {data2.map((item, index) => (
+                  <SwiperSlide
+                    key={index}
                     style={{
-                    // height: '470px',
-                    width: '100%',
-                    transition: 'width .2s ease-in-out',
+                      backgroundRepeat: 'no-repeat',
+                      transition: 'width .1s ease-in-out',
                     }}
-                >
-                    {data2?.map((item, index) => {
-                    return (
-                        <SwiperSlide
-                        key={index}
-                        style={{
-                            // height: {base: 'fit-content', md: '400px'},
-                            // backgroundImage: `url(${item?.jpg?.large_image_url})`,
-                            // backgroundSize: 'contain',
-                            backgroundRepeat: 'no-repeat',
-                            transition: 'width .1s ease-in-out',
-                        }}
-                        >
-                          <Image borderRadius='10px' src={item?.jpg?.large_image_url} />
-                        </SwiperSlide>
-                    );
-                    })}
-                </Swiper>
+                  >
+                    <Image margin='auto' maxW='100%' borderRadius='10px' src={item?.jpg?.large_image_url} />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            ) : null}
+
           </Box> 
-          <Box>
-            <Text mb='10px'>Bagikan Event</Text>
-            <HStack>
+          <Box mt={{base: '20px', md: '10px'}} mb={{base: '20px', md: '0px'}} textAlign='center'>
+            <Text mb='10px'>Share</Text>
+            <Flex flexWrap='wrap' justifyContent='center' gap='10px'>
               <FacebookShareButton url={`${window.location.href}`} quote={'Check out these awesome anime! 🎉📺 #Anime #Recommendations'} hashtag='#ticketing'>
                 <Button colorScheme='facebook' leftIcon={<FaFacebook />}>
                   Facebook
@@ -304,9 +331,9 @@ console.log("ini data", data);
                   Twitter
                 </Button>
               </TwitterShareButton>
-            </HStack>
+            </Flex>
           </Box>
-        </VStack>
+        </Box>
       </Flex>
     </>
   );

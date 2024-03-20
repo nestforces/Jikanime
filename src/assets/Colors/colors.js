@@ -5,6 +5,7 @@ export const colors = {
     darker: "#154c79",
     background: "#000000",
     text: "#ffffff",
+    textsecondary: '#5d757f',
     backgroundcard: "#222222",
     // Add more colors as needed
   };
