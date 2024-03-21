@@ -9,12 +9,14 @@ import AiringNow from '../../components/Home/AiringNow/AiringNow';
 import Footer from '../../components/Footer/Footer';
 import Loader from '../../components/Loader/Loader';
 import LoaderTopAnime from '../../components/Loader/LoaderTopAnime';
+import Movies from '../../components/Home/Movies/Movies';
 
 const Home = () => {
   const [topAnimeLoaded, setTopAnimeLoaded] = useState(false);
   const [recomendationsLoaded, setRecomendationsLoaded] = useState(false);
   const [airingNowLoaded, setAiringNowLoaded] = useState(false);
   const [upcomingLoaded, setUpcomingLoaded] = useState(false);
+  const [moviesLoaded, setMoviesLoaded] = useState(false);
   const [isTopSection, setIsTopSection] = useState(true);
 
   useEffect(() => {
@@ -108,15 +110,36 @@ const Home = () => {
     }
   }, [airingNowLoaded]);
 
-  
-
   const fetchDataForUpcoming = async () => {
     try {
       // Fetch data for Upcoming
       // For example:
       // const response = await axios.get('upcomingApiEndpoint');
       // setDataForUpcoming(response.data);
+      setTimeout(() => {
         setUpcomingLoaded(true);
+      }, 2000);
+    } catch (error) {
+      console.error('Error fetching data for Upcoming:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (upcomingLoaded) {
+      fetchDataForMovies();
+    }
+  }, [upcomingLoaded]);
+
+  const fetchDataForMovies = async () => {
+    try {
+      // Fetch data for Upcoming
+      // For example:
+      // const response = await axios.get('upcomingApiEndpoint');
+      // setDataForUpcoming(response.data);
+        
+        setTimeout(() => {
+          setMoviesLoaded(true);
+        }, 2000);
     } catch (error) {
       console.error('Error fetching data for Upcoming:', error);
     }
@@ -154,6 +177,14 @@ const Home = () => {
               <Text textColor={colors.text}>more</Text>
             </HStack>
             {upcomingLoaded && <Upcoming />} {!upcomingLoaded && <Loader />}
+          </Box>
+          <Box>
+            <HStack>
+              <Text textColor={colors.text} fontSize='x-large' fontWeight='bold'>Top Movies</Text>
+              <Spacer />
+              <Text textColor={colors.text}>more</Text>
+            </HStack>
+            {moviesLoaded && <Movies />} {!moviesLoaded && <Loader />}
           </Box>
         </Box>
         <Footer />

@@ -44,7 +44,7 @@ const Footer = () => {
                                 <Text _hover={{color: `${colors.text}`}} color='#ea0c5f' cursor='pointer'><FaInstagramSquare fontSize='xx-large' /></Text>
                                 <Text _hover={{color: `${colors.text}`}} color=' #5865f2' cursor='pointer'><FaDiscord fontSize='xx-large' /></Text>
                             </Flex>
-                            <Flex gap='10px' width={{base: '100%', md: '50%'}}>
+                            <Flex gap='10px' fontSize='large' width={{base: '100%', md: '50%'}}>
                                 <Text whiteSpace='nowrap' textColor={colors.text}>Get The App</Text>
                                 <Image height='30px' src={googleplay} />
                                 <Image height='30px' src={appstore} />
