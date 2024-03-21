@@ -10,6 +10,7 @@ import Footer from '../../components/Footer/Footer';
 import Loader from '../../components/Loader/Loader';
 import LoaderTopAnime from '../../components/Loader/LoaderTopAnime';
 import Movies from '../../components/Home/Movies/Movies';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const [topAnimeLoaded, setTopAnimeLoaded] = useState(false);
@@ -18,6 +19,7 @@ const Home = () => {
   const [upcomingLoaded, setUpcomingLoaded] = useState(false);
   const [moviesLoaded, setMoviesLoaded] = useState(false);
   const [isTopSection, setIsTopSection] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     
@@ -158,7 +160,7 @@ const Home = () => {
             <HStack>
               <Text textColor={colors.text} fontSize='x-large' fontWeight='bold'>Recomendations</Text>
               <Spacer />
-              <Text textColor={colors.text}>more</Text>
+              <Text textColor={colors.text} cursor='pointer' onClick={() => navigate('anime-lists/recomendations')}>more</Text>
             </HStack>
             {recomendationsLoaded && <Recomendations />} {!recomendationsLoaded && <Loader />}
           </Box>
@@ -166,7 +168,7 @@ const Home = () => {
             <HStack>
               <Text textColor={colors.text} fontSize='x-large' fontWeight='bold'>Airing Now</Text>
               <Spacer />
-              <Text textColor={colors.text}>more</Text>
+              <Text textColor={colors.text} cursor='pointer' onClick={() => navigate('anime-lists/airingnow')}>more</Text>
             </HStack>
             {airingNowLoaded && <AiringNow />} {!airingNowLoaded && <Loader />}
           </Box>
@@ -174,7 +176,7 @@ const Home = () => {
             <HStack>
               <Text textColor={colors.text} fontSize='x-large' fontWeight='bold'>Upcoming</Text>
               <Spacer />
-              <Text textColor={colors.text}>more</Text>
+              <Text textColor={colors.text} cursor='pointer' onClick={() => navigate('anime-lists/upcoming')}>more</Text>
             </HStack>
             {upcomingLoaded && <Upcoming />} {!upcomingLoaded && <Loader />}
           </Box>
@@ -182,7 +184,7 @@ const Home = () => {
             <HStack>
               <Text textColor={colors.text} fontSize='x-large' fontWeight='bold'>Top Movies</Text>
               <Spacer />
-              <Text textColor={colors.text}>more</Text>
+              <Text textColor={colors.text} cursor='pointer' onClick={() => navigate('anime-lists/topmovies')}>more</Text>
             </HStack>
             {moviesLoaded && <Movies />} {!moviesLoaded && <Loader />}
           </Box>

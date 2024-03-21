@@ -1,4 +1,4 @@
-import { Flex, Image, Heading, Text, Box, useColorModeValue, HStack, VStack, Button} from '@chakra-ui/react'
+import { Flex, Image, Heading, Text, Box, useColorModeValue, HStack, VStack, Button, Card, CardBody,} from '@chakra-ui/react'
 import React, {useState, useEffect} from 'react'
 import {BsFillCalendarWeekFill} from 'react-icons/bs' 
 import {AiFillClockCircle,} from 'react-icons/ai'
@@ -27,6 +27,8 @@ const TopBox = ({data}) => {
                     <Text fontSize='xxx-large' onClick={() => setSelectedTrailer(data?.trailer?.embed_url)} textColor={colors.primary} cursor='pointer' _hover={{textColor: `${colors.text}`}}><FaRegCirclePlay /></Text>
                 </Box>
                 <Image  zIndex='1' borderRadius={{base: '0px', md: '10px'}} height={data?.trailer?.images?.maximum_image_url != null ? 'fit-content' : '400px'} objectFit={data?.trailer?.images?.maximum_image_url != null ? 'fill' : 'cover'} width='100%' src={data?.trailer?.images?.maximum_image_url != null ? data?.trailer?.images?.maximum_image_url : data?.images?.jpg?.large_image_url} />
+                
+
                 <Box mt='10px' p='10px' boxShadow="0px 1px 5px gray" bg={colors.backgroundcard} borderRadius='10px'>
                     <Text>Streaming : </Text>
                    <Flex gap='10px' flexDirection='row' flexWrap='wrap'>

@@ -12,6 +12,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import AnimeByGenre from '../../components/AnimeDetail/AnimeByGenre/AnimeByGenre';
 import Footer from '../../components/Footer/Footer';
+import AnimeVideos from '../../components/AnimeDetail/AnimeVideos/AnimeVideos';
 
 const AnimeDetail = () => {
   const { id } = useParams();
@@ -146,6 +147,9 @@ useEffect(() => {
           </Box>
         <Box id='recomendationsection' maxWidth='100vw' mt='20px'>
           <BottomBox data={data} />
+        </Box>
+        <Box>
+          <AnimeVideos malId={data?.mal_id} />
         </Box>
         <Box>
           <AnimeByGenre genreId={data?.genres} />
