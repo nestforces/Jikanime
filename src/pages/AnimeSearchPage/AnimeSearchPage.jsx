@@ -78,7 +78,7 @@ const AnimeSearchPage = ({dataKey}) => {
                 <><Text mt='70px' textColor={colors.text}>Result for "{keyword}", total {data1?.items?.total} items</Text>
                 <Grid
                 mt='70px'
-                templateColumns='repeat(auto-fill, minmax(230px, 1fr))'
+                templateColumns={{base: 'repeat(auto-fill, minmax(130px, 1fr))', md: 'repeat(auto-fill, minmax(230px, 1fr))'}}
                 // w={'fit-content'}
                 gap={5}
             >
@@ -90,7 +90,7 @@ const AnimeSearchPage = ({dataKey}) => {
                                 <CardBody  bgColor='rgba(0, 0, 0, 0.4)'
                                     _hover={{ bgColor: 'rgba(0, 0, 0, 0.8)' }} cursor='pointer'>
                                     <Stack mt='-3' spacing='0'>
-                                    <Heading  size="sm" width="180px" css={{ height: '-webkit-min-content', maxHeight: '-webkit-min-content', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' }}>
+                                    <Heading whiteSpace='wrap' size="sm" css={{ height: '-webkit-min-content', maxHeight: '-webkit-min-content', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' }}>
                                         {item.title}
                                         </Heading>
                                         <Text fontSize="xs" mt="5px">
