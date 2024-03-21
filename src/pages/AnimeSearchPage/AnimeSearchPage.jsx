@@ -84,7 +84,7 @@ const AnimeSearchPage = ({dataKey}) => {
             >
                 {data?.map((item, index) => (
                     <>
-                        <Card onClick={(event) => { event.preventDefault(); navigate(`/anime-detail/${item?.mal_id}`); window.location.reload()}} width='auto' height='300px' textColor={colors?.text} key={item.mal_id} bgSize='cover' bgImage={item?.images?.jpg?.large_image_url}
+                        <Card onClick={(event) => { event.preventDefault(); navigate(`/anime-detail/${item?.mal_id}`); window.location.reload()}} width='auto' height='300px' textColor={colors?.text} key={item.mal_id} bgSize='cover' bgPosition='center' bgImage={item?.images?.jpg?.large_image_url}
                             // boxShadow='0px 1px 5px white' 
                             >
                                 <CardBody  bgColor='rgba(0, 0, 0, 0.4)'
