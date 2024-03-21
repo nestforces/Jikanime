@@ -6,6 +6,9 @@ import TopAnime from '../../components/Home/TopAnime/TopAnime';
 import Upcoming from '../../components/Home/Upcoming/Upcoming';
 import Navbar from '../../components/Navbar/Navbar';
 import AiringNow from '../../components/Home/AiringNow/AiringNow';
+import Footer from '../../components/Footer/Footer';
+import Loader from '../../components/Loader/Loader';
+import LoaderTopAnime from '../../components/Loader/LoaderTopAnime';
 
 const Home = () => {
   const [topAnimeLoaded, setTopAnimeLoaded] = useState(false);
@@ -124,7 +127,7 @@ const Home = () => {
       <Box backgroundColor={colors.background} width='100vw' height='full'>\
         <Navbar isTopSection={isTopSection}/>
       <Box id='topsection'>
-            {topAnimeLoaded && <TopAnime />}
+            {topAnimeLoaded && <TopAnime />} {!topAnimeLoaded && <LoaderTopAnime />}
         {/* <Box id='topsection'></Box> */}
           </Box>
         <Box maxWidth='100vw' p='20px'>
@@ -134,7 +137,7 @@ const Home = () => {
               <Spacer />
               <Text textColor={colors.text}>more</Text>
             </HStack>
-            {recomendationsLoaded && <Recomendations />}
+            {recomendationsLoaded && <Recomendations />} {!recomendationsLoaded && <Loader />}
           </Box>
           <Box>
             <HStack>
@@ -142,7 +145,7 @@ const Home = () => {
               <Spacer />
               <Text textColor={colors.text}>more</Text>
             </HStack>
-            {airingNowLoaded && <AiringNow />}
+            {airingNowLoaded && <AiringNow />} {!airingNowLoaded && <Loader />}
           </Box>
           <Box>
             <HStack>
@@ -150,9 +153,10 @@ const Home = () => {
               <Spacer />
               <Text textColor={colors.text}>more</Text>
             </HStack>
-            {upcomingLoaded && <Upcoming />}
+            {upcomingLoaded && <Upcoming />} {!upcomingLoaded && <Loader />}
           </Box>
         </Box>
+        <Footer />
       </Box>
     </>
   );

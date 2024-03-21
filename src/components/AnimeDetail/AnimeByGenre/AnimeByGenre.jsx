@@ -30,7 +30,7 @@ const AnimeByGenre = ({genreId}) => {
             const response = await axios.get(
                 `https://api.jikan.moe/v4/anime?genres=${randomEntries}`,
                 {
-                    timeout: 2000 // Timeout in milliseconds (e.g., 5000 = 5 seconds)
+                    timeout: 2000 
                 }
             );
             setData(response?.data?.data);

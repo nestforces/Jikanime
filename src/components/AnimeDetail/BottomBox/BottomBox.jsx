@@ -24,6 +24,11 @@ const BottomBox = ({data}) => {
   const [displayedCharacters, setDisplayedCharacters] = useState(6);
   const [displayedOpenings, setDisplayedOpenings] = useState(5);
   const [displayedEndings, setDisplayedEndings] = useState(5);
+  const [isBackgroundExpanded, setIsBackgroundExpanded] = useState(false);
+
+  const toggleBackground = () => {
+      setIsBackgroundExpanded(!isBackgroundExpanded);
+    };
 
   const handleLoadMore = () => {
     // Increase the number of displayed characters by 12 when the button is clicked
@@ -157,6 +162,17 @@ console.log("ini data", data);
                   <Text cursor='pointer' textColor={colors.secondary} colorScheme="blue" variant="link" onClick={toggleSynopsis} ml="2">
                     {isSynopsisExpanded ? 'Read Less' : 'Read More'} </Text>
                 </Text>
+                <HStack mb={{base: '10px', md: '0px'}} mt={{base: '20px', md: '0px'}}>
+                  <Box bg={colors.secondary} width='7px' display={{base: 'block', md: 'none'}} color={colors.secondary} borderRadius='0px 10px 0px 10px'>
+                    |
+                  </Box>
+                  <Heading size='md' display={{base: 'block', md: 'none'}}>Background</Heading>
+                </HStack>
+                <Text display={{base: 'block', md: 'none'}}>
+                    {isBackgroundExpanded ? data?.background : `${data?.background?.substring(0, 90)}...`}
+                    <Text cursor='pointer' textColor={colors.secondary} colorScheme="blue" variant="link" onClick={toggleBackground} ml="2">
+                        {isBackgroundExpanded ? 'Read Less' : 'Read More'} </Text>
+                    </Text>
                 <HStack mb='10px' mt='20px'>
                   <Box bg={colors.secondary} width='7px' color={colors.secondary} borderRadius='0px 10px 0px 10px'>
                     |
@@ -321,12 +337,12 @@ console.log("ini data", data);
           <Box mt={{base: '20px', md: '10px'}} mb={{base: '20px', md: '0px'}} textAlign='center'>
             <Text mb='10px'>Share</Text>
             <Flex flexWrap='wrap' justifyContent='center' gap='10px'>
-              <FacebookShareButton url={`${window.location.href}`} quote={'Check out these awesome anime! 🎉📺 #Anime #Recommendations'} hashtag='#ticketing'>
+              <FacebookShareButton url={`${window.location.href}`} quote={'Check out these awesome anime! 🎉📺 #Anime #Recommendations'} hashtag='#jikanime'>
                 <Button colorScheme='facebook' leftIcon={<FaFacebook />}>
                   Facebook
                 </Button>
               </FacebookShareButton>
-              <TwitterShareButton url={`${window.location.href}`} quote={'Check out these awesome anime! 🎉📺 #Anime #Recommendations'} hashtag='#ticketing'>
+              <TwitterShareButton url={`${window.location.href}`} quote={'Check out these awesome anime! 🎉📺 #Anime #Recommendations'} hashtag='#jikanime'>
                 <Button colorScheme='twitter' leftIcon={<FaTwitter />}>
                   Twitter
                 </Button>

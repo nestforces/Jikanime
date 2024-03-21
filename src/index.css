@@ -67,7 +67,7 @@ button:focus-visible {
   }
 } */
 
-body {
+:root {
   scrollbar-width: none;
   background-color: "#000000";
 }
