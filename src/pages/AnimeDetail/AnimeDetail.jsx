@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, HStack, Spacer, Text } from '@chakra-ui/react';
-import { colors } from '../../assets/Colors/colors';
+import { getColors } from '../../assets/Colors/colors';
 import Recomendations from '../../components/Home/Recomendations/Recomendations';
 import TopAnime from '../../components/Home/TopAnime/TopAnime';
 import Upcoming from '../../components/Home/Upcoming/Upcoming';
@@ -22,6 +22,21 @@ const AnimeDetail = () => {
   const [upcomingLoaded, setUpcomingLoaded] = useState(false);
   const [isTopSection, setIsTopSection] = useState(true);
   const [data, setData] = useState([]);
+  const [colorMode, setColorMode] = useState(localStorage.getItem("colorMode") || "dark"); // Retrieve colorMode from local storage
+  const colors = getColors();
+  
+  useEffect(() => {
+    const handleColorModeChange = () => {
+        // Re-render the component to reflect the updated color mode
+        forceUpdate();
+    };
+
+    window.addEventListener('storage', handleColorModeChange);
+
+    return () => {
+        window.removeEventListener('storage', handleColorModeChange);
+    };
+}, []);
 
   const fetchData = async () => {
     try {
@@ -140,8 +155,8 @@ useEffect(() => {
 
   return (
     <>
-      <Box backgroundColor={colors.background} margin='auto' width='100vw' justifyContent='center' height='full'>\
-        <Navbar isTopSection={isTopSection}/>
+      <Box backgroundColor={colors.background} margin='auto' width='100vw' justifyContent='center' height='full'>
+        <Navbar isTopSection={isTopSection} colorMode2={colorMode} setColorMode2={setColorMode} />
       <Box id='topsection'>
         <TopBox data={data} />
           </Box>

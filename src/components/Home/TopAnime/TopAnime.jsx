@@ -2,7 +2,7 @@ import { Box, Flex, Text, Image, VStack, Button, Card, CardBody, Heading, useCol
 import axios from 'axios';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { colors } from "../../../assets/Colors/colors";
+import { getColors } from "../../../assets/Colors/colors";
 import star from './star-svgrepo-com.svg';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
@@ -14,6 +14,20 @@ const TopAnime = () => {
     const [data, setData] = useState([]);
     const navigate = useNavigate();
     const [selectedTrailer, setSelectedTrailer] = useState("");
+    const colors = getColors();
+  
+  useEffect(() => {
+    const handleColorModeChange = () => {
+        // Re-render the component to reflect the updated color mode
+        forceUpdate();
+    };
+
+    window.addEventListener('storage', handleColorModeChange);
+
+    return () => {
+        window.removeEventListener('storage', handleColorModeChange);
+    };
+}, []);
 
     const fetchData = async () => {
         try {
@@ -68,7 +82,7 @@ const TopAnime = () => {
                         }}
                         >
                             <Flex gap='10px' padding='20px' height='full' backgroundColor='rgba(0, 0, 0, 0.9)'>
-                                <Flex flexDirection='column' textColor={colors.text} gap='5px' width='70%' margin='auto'>
+                                <Flex flexDirection='column' textColor={'white'} gap='5px' width='70%' margin='auto'>
                                     <Text css={{ textShadow: ` -1px -1px 0 ${colors.primary},   1px -1px 0 ${colors.primary}, -1px 1px 0 ${colors.primary}, 1px 1px 0 ${colors.primary} ` }} fontWeight='bold' fontSize={{base: 'x-large', md: 'xx-large',}}>{item?.title}</Text>
                                     <Flex dir='row' mt='5px' gap='5px'>
                                         <Image boxSize='23px' src={star} />
@@ -78,7 +92,7 @@ const TopAnime = () => {
                                     <Text size="sm" css={{ height: '-webkit-min-content', maxHeight: '-webkit-min-content', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' }}>{item?.synopsis}</Text>
                                     <Flex mt='5px' gap ='10px'>
                                         <Button leftIcon={<IoMdInformationCircle />} onClick={() => navigate(`anime-detail/${item?.mal_id}`)} textColor='white' _hover={{textColor: `${colors.primary}`, backgroundColor: 'white'}} backgroundColor={colors.primary}>More Info</Button>
-                                        <Button leftIcon={<FaRegCirclePlay />} onClick={() => setSelectedTrailer(item?.trailer?.embed_url)} textColor={colors.primary} _hover={{textColor: `${colors.text}`, backgroundColor: `${colors.primary}`}}>Trailer</Button>
+                                        <Button leftIcon={<FaRegCirclePlay />} onClick={() => setSelectedTrailer(item?.trailer?.embed_url)} textColor={colors.primary} _hover={{textColor: `${'white'}`, backgroundColor: `${colors.primary}`}}>Trailer</Button>
                                     </Flex>
                                 </Flex>
                                 <Box margin='auto' width='30%'>

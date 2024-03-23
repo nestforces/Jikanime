@@ -4,7 +4,7 @@ import {BsFillCalendarWeekFill} from 'react-icons/bs'
 import {AiFillClockCircle,} from 'react-icons/ai'
 import {HiLocationMarker} from 'react-icons/hi'
 import axios from 'axios'
-import { colors } from '../../../assets/Colors/colors'
+import { getColors } from '../../../assets/Colors/colors'
 import star from './star-svgrepo-com.svg';
 import { FaRegCirclePlay } from "react-icons/fa6";
 import { Grid } from 'swiper/modules'
@@ -14,6 +14,20 @@ const TopBox = ({data}) => {
     // console.log(data);
     const [selectedTrailer, setSelectedTrailer] = useState("");
     const [isBackgroundExpanded, setIsBackgroundExpanded] = useState(false);
+    const colors = getColors();
+  
+  useEffect(() => {
+    const handleColorModeChange = () => {
+        // Re-render the component to reflect the updated color mode
+        forceUpdate();
+    };
+
+    window.addEventListener('storage', handleColorModeChange);
+
+    return () => {
+        window.removeEventListener('storage', handleColorModeChange);
+    };
+}, []);
 
     const toggleBackground = () => {
         setIsBackgroundExpanded(!isBackgroundExpanded);
@@ -33,7 +47,7 @@ const TopBox = ({data}) => {
                     <Text>Streaming : </Text>
                    <Flex gap='10px' flexDirection='row' flexWrap='wrap'>
                    {data?.streaming?.length > 0 && data?.streaming?.map((item, index) => (
-                        <Text cursor='pointer' textColor={'aqua'} _hover={{textColor: `${colors.text}`}} onClick={() => window.open(`${item?.url}`, "_blank")}>
+                        <Text cursor='pointer' textColor={colors.secondary} _hover={{textColor: `${colors.text}`}} onClick={() => window.open(`${item?.url}`, "_blank")}>
                             ● {item?.name}
                         </Text>
                     ))}

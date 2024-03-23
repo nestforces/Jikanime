@@ -6,17 +6,20 @@ import Home from './pages/Home/Home';
 import AnimeDetail from './pages/AnimeDetail/AnimeDetail';
 import AnimeSearchPage from './pages/AnimeSearchPage/AnimeSearchPage';
 import AnimeLists from './pages/AnimeLists/AnimeLists';
+import { ColorModeProvider } from './assets/Colors/ColorModeProvider';
 
 function App() {
 
   return (
     <>
+        {/* <ColorModeProvider> */}
         <Routes>
           <Route path = '/' element={<Home />}/>
           <Route path = '/anime-detail/:id' element={<AnimeDetail />}/>
           <Route path = '/anime-search' element={<AnimeSearchPage />}/>
           <Route path = '/anime-lists/:typeLists' element={<AnimeLists />}/>
         </Routes>
+        {/* </ColorModeProvider> */}
     </>
   )
 }

@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Flex, Box, HStack, Text, Select, Spacer, Button } from '@chakra-ui/react';
 // import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { colors } from '../../assets/Colors/colors';
+import { getColors } from '../../assets/Colors/colors';
 
 const MAX_VISIBLE_PAGES = 3;
 
@@ -18,6 +18,20 @@ export const PaginationControls = ({
 }) => {
 
     console.log(data)
+    const colors = getColors();
+  
+  useEffect(() => {
+    const handleColorModeChange = () => {
+        // Re-render the component to reflect the updated color mode
+        forceUpdate();
+    };
+
+    window.addEventListener('storage', handleColorModeChange);
+
+    return () => {
+        window.removeEventListener('storage', handleColorModeChange);
+    };
+}, []);
   
   const getPageNumbers = () => {
     const totalPages = data?.last_visible_page || 0;
@@ -57,7 +71,7 @@ export const PaginationControls = ({
                 <HStack>
                   <Text>Show per Page</Text>
                   <Select
-                    border="solid 1px white"
+                    border={`solid 1px ${colors.text}`}
                     width="fit-content"
                     value={pageSize}
                     onChange={(e) => setPageSize(e.target.value)}

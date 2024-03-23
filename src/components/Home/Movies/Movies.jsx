@@ -2,13 +2,27 @@ import { Box, Flex, Text, Image, VStack, Button, Card, CardBody, Heading, useCol
 import axios from 'axios';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { colors } from "../../../assets/Colors/colors";
+import { getColors } from "../../../assets/Colors/colors";
 import star from './star-svgrepo-com.svg';
 
 
 const Movies = () => {
     const [data, setData] = useState([]);
     const navigate = useNavigate();
+    const colors = getColors();
+  
+  useEffect(() => {
+    const handleColorModeChange = () => {
+        // Re-render the component to reflect the updated color mode
+        forceUpdate();
+    };
+
+    window.addEventListener('storage', handleColorModeChange);
+
+    return () => {
+        window.removeEventListener('storage', handleColorModeChange);
+    };
+}, []);
 
     const fetchData = async () => {
         try {
@@ -40,7 +54,7 @@ const Movies = () => {
                 {data?.map((item, index) => (
                     <>
                         <Box>
-                        <Card onClick={() => navigate(`anime-detail/${item?.mal_id}`)} width='230px' height='300px' textColor={colors?.text} key={item.mal_id} bgSize='cover' bgImage={item?.images?.jpg?.large_image_url}
+                        <Card onClick={() => navigate(`anime-detail/${item?.mal_id}`)} width='230px' height='300px' textColor={'white'} key={item.mal_id} bgSize='cover' bgImage={item?.images?.jpg?.large_image_url}
                             // boxShadow='0px 1px 5px white' 
                             >
                                 <CardBody  bgColor='rgba(0, 0, 0, 0.4)'

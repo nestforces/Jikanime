@@ -2,7 +2,7 @@ import { Box, Flex, Text, Image, VStack, Button, Card, CardBody, Heading, useCol
 import axios from 'axios';
 import { useEffect, useState } from "react";
 import { useNavigate, } from "react-router-dom";
-import { colors } from "../../../assets/Colors/colors";
+import { getColors } from "../../../assets/Colors/colors";
 import star from './star-svgrepo-com.svg';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
@@ -16,6 +16,21 @@ const AnimeByGenre = ({genreId}) => {
     const [selectedTrailer, setSelectedTrailer] = useState("");
     const genreIds = genreId?.map(entry => entry?.mal_id); // Extract mal_id values
     // const firstThreeGenreIds = genreIds?.slice(0, 3);
+    const colors = getColors();
+  
+  useEffect(() => {
+    const handleColorModeChange = () => {
+        // Re-render the component to reflect the updated color mode
+        forceUpdate();
+    };
+
+    window.addEventListener('storage', handleColorModeChange);
+
+    return () => {
+        window.removeEventListener('storage', handleColorModeChange);
+    };
+}, []);
+
     
     // Shuffle the array randomly
     const shuffledIds = genreIds?.sort(() => Math.random() - 0.5);
@@ -61,7 +76,7 @@ const AnimeByGenre = ({genreId}) => {
                 {data?.map((item, index) => (
                     <>
                         <Box key={index}>
-                        <Card onClick={(event) => { event.preventDefault(); navigate(`/anime-detail/${item?.mal_id}`); window.location.reload()}} width='230px' height='300px' textColor={colors?.text} key={item.mal_id} bgSize='cover' bgImage={item?.images?.jpg?.large_image_url}
+                        <Card onClick={(event) => { event.preventDefault(); navigate(`/anime-detail/${item?.mal_id}`); window.location.reload()}} width='230px' height='300px' textColor={'white'} key={item.mal_id} bgSize='cover' bgImage={item?.images?.jpg?.large_image_url}
                             >
                                 <CardBody  bgColor='rgba(0, 0, 0, 0.4)'
                                     _hover={{ bgColor: 'rgba(0, 0, 0, 0.8)' }} cursor='pointer'>

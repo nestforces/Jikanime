@@ -6,7 +6,7 @@ import { getColors } from "../../../assets/Colors/colors";
 import star from './star-svgrepo-com.svg';
 
 
-const Recomendations = () => {
+const Horror = () => {
     const [data, setData] = useState([]);
     const navigate = useNavigate();
     const colors = getColors();
@@ -27,7 +27,7 @@ const Recomendations = () => {
     const fetchData = async () => {
         try {
             const response = await axios.get(
-                `https://api.jikan.moe/v4/top/anime`
+                `https://api.jikan.moe/v4/anime?genres=14&min_score=7&max_score=10&order_by=score&sort=desc`
             );
             console.log(response?.data);
             setData(response?.data?.data);
@@ -91,4 +91,4 @@ const Recomendations = () => {
     )
 }
 
-export default Recomendations;
+export default Horror;

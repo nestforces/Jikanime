@@ -5,13 +5,27 @@ import { AiFillTwitterCircle } from "react-icons/ai";
 import { FaFacebook, FaFacebookSquare, FaInstagramSquare, FaTwitterSquare } from "react-icons/fa";
 import { FaDiscord } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
-import { colors } from "../../assets/Colors/colors";
+import { getColors } from "../../assets/Colors/colors";
 import googleplay from '../../assets/Footer/googleplay.png';
 import appstore from '../../assets/Footer/appstore.png';
 
 const Footer = () => {
     const [data, setData] = useState([]);
     const navigate = useNavigate();
+    const colors = getColors();
+  
+  useEffect(() => {
+    const handleColorModeChange = () => {
+        // Re-render the component to reflect the updated color mode
+        forceUpdate();
+    };
+
+    window.addEventListener('storage', handleColorModeChange);
+
+    return () => {
+        window.removeEventListener('storage', handleColorModeChange);
+    };
+}, []);
 
     // const fetchData = async () => {
     //     try {

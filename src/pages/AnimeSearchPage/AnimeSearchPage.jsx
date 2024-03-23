@@ -1,22 +1,44 @@
-import { Box, Flex, Text, Image, VStack, Spacer, InputGroup, Input, InputRightElement, Card, CardBody, Heading, useColorModeValue, Stack, Grid } from "@chakra-ui/react";
+import { Box, Flex, Text, Image, VStack, Spacer, InputGroup, Input, InputRightElement, Card, CardBody, Heading, useColorModeValue, Stack, Grid, IconButton } from "@chakra-ui/react";
 import axios from 'axios';
 import { useEffect, useState } from "react";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaSun, FaMoon } from "react-icons/fa";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { colors } from "../../assets/Colors/colors";
+import { getColors } from "../../assets/Colors/colors";
 import Footer from "../../components/Footer/Footer";
 import { PaginationControls } from "../../components/PaginationControls/PaginationControls";
 import star from './star-svgrepo-com.svg';
 
-const AnimeSearchPage = ({dataKey}) => {
+const AnimeSearchPage = () => {
     const [data, setData] = useState([]);
     const navigate = useNavigate();
-    const [keyword, setKeyword] = useState(dataKey);
+    const [keyword, setKeyword] = useState(localStorage?.getItem('dataKey') || '' );
     const [page, setPage] = useState();
     const [pageSize, setPageSize] = useState()
     const [selectedPage, setSelectedPage] = useState(page);
     const [data1, setData1] = useState([]);
     const [searchParams, setSearchParams] = useSearchParams({ page, pageSize });
+    const [colorMode, setColorMode] = useState(localStorage?.getItem("colorMode") || "dark"); // Retrieve colorMode from local storage
+    const colors = getColors();
+
+    const toggleColorMode = () => {
+        const newColorMode = colorMode === "light" ? "dark" : "light";
+        setColorMode(newColorMode);
+        localStorage.setItem("colorMode", newColorMode); // Store colorMode in local storage
+        // window.scrollTo(0, 0);
+    };
+  
+  useEffect(() => {
+        const handleColorModeChange = () => {
+            // Re-render the component to reflect the updated color mode
+            forceUpdate();
+        };
+
+        window.addEventListener('storage', handleColorModeChange);
+
+        return () => {
+            window.removeEventListener('storage', handleColorModeChange);
+        };
+    }, []);
 
     const fetchData = async () => {
         try {
@@ -54,27 +76,51 @@ const AnimeSearchPage = ({dataKey}) => {
         fetchData();
     }, [page, pageSize]);
 
+    // useEffect(() => {
+    //     localStorage.setItem('dataKey', keyword);
+    // }, [keyword]);
+
+    useEffect(() => {
+        const cleanupLocalStorage = () => {
+            localStorage.removeItem('dataKey');
+        };
+
+        window.addEventListener('beforeunload', cleanupLocalStorage);
+
+        return () => {
+            window.removeEventListener('beforeunload', cleanupLocalStorage);
+        };
+    }, []);
+
     return (
         <>
             <Box bgColor={colors.background} maxHeight='fit-content' minH='100vh' width='100vw'>
                 
             <Box height='full'>
-            <Box position='fixed' top={-1} zIndex={99} bg='black' width='full'>
+            <Box position='fixed' top={-1} zIndex={99} bg={colors.backgroundcard} width='full'>
                 <Flex p='10px' ml='20px' flexDirection='row' bg='transparent'>
                     <Text marginTop={{base: '5px', md: '0px'}} marginBottom='auto' css={{ textShadow: ` -1px -1px 0 #fff,   1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff ` }} fontWeight='bold' fontFamily='fantasy' bg='transparent' fontSize={{base: 'x-large', md: 'xx-large',}} textColor={colors.primary}>JIKANIME</Text>
                     <Spacer />
-                    <Box width={{base: '40%', md: '30%'}} marginRight='10px'>
-                        <InputGroup><Input placeholder='Search amazing anime here...' marginTop='10px' marginBottom='auto' height='30px' border='none' bgColor='white' width='100%' value={keyword} onChange={(e) => {setKeyword(e.target.value);}} /><InputRightElement 
+                    <Flex flexDirection='row' width={{base: '40%', md: '30%'}} marginRight='10px'>
+                        <InputGroup><Input textColor='black' _placeholder={{textColor: 'gray'}} placeholder='Search amazing anime here...' marginTop='10px' marginBottom='auto' height='30px' border='none' bgColor='white' width='100%' value={keyword} onChange={(e) => {setKeyword(e.target.value);}} /><InputRightElement 
                             backgroundColor={'#0049CB'} marginTop='10px' marginBottom='auto' height='30px'
                             pointerEvents={''} cursor='pointer' borderRightRadius='5px' onClick={() => fetchData()} >
                                 <FaSearch color='white'/>
                             </InputRightElement></InputGroup>
-                    </Box>
+                            <IconButton
+                                height='30px'
+                                mt='10px'
+                                aria-label="Toggle Dark Mode"
+                                icon={colorMode === "light" ? <FaMoon /> : <FaSun />}
+                                onClick={toggleColorMode}
+                                variant="ghost"
+                            />
+                    </Flex>
                 </Flex>
             </Box>
         
       <Box p='30px' width='100%' >
-                {data?.length > 0 ? 
+                {keyword && data?.length > 0 ? 
                 <><Text mt='70px' textColor={colors.text}>Result for "{keyword}", total {data1?.items?.total} items</Text>
                 <Grid
                 mt='70px'
@@ -84,7 +130,7 @@ const AnimeSearchPage = ({dataKey}) => {
             >
                 {data?.map((item, index) => (
                     <>
-                        <Card onClick={(event) => { event.preventDefault(); navigate(`/anime-detail/${item?.mal_id}`); window.location.reload()}} width='auto' height='300px' textColor={colors?.text} key={item.mal_id} bgSize='cover' bgPosition='center' bgImage={item?.images?.jpg?.large_image_url}
+                        <Card onClick={(event) => { event.preventDefault(); navigate(`/anime-detail/${item?.mal_id}`); window.location.reload()}} width='auto' height='300px' textColor={'white'} key={item.mal_id} bgSize='cover' bgPosition='center' bgImage={item?.images?.jpg?.large_image_url}
                             // boxShadow='0px 1px 5px white' 
                             >
                                 <CardBody  bgColor='rgba(0, 0, 0, 0.4)'

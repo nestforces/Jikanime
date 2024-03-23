@@ -7,7 +7,7 @@ import axios from 'axios';
 // import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter} from '@chakra-ui/react'
-import { colors } from '../../../assets/Colors/colors';
+import { getColors } from '../../../assets/Colors/colors';
 // import { ReactComponent as MySVG } from './ic_voucher.svg';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
@@ -25,6 +25,20 @@ const BottomBox = ({data}) => {
   const [displayedOpenings, setDisplayedOpenings] = useState(5);
   const [displayedEndings, setDisplayedEndings] = useState(5);
   const [isBackgroundExpanded, setIsBackgroundExpanded] = useState(false);
+  const colors = getColors();
+  
+  useEffect(() => {
+    const handleColorModeChange = () => {
+        // Re-render the component to reflect the updated color mode
+        forceUpdate();
+    };
+
+    window.addEventListener('storage', handleColorModeChange);
+
+    return () => {
+        window.removeEventListener('storage', handleColorModeChange);
+    };
+}, []);
 
   const toggleBackground = () => {
       setIsBackgroundExpanded(!isBackgroundExpanded);
@@ -245,7 +259,7 @@ console.log("ini data", data);
                 p='5px'
                 borderRadius='10px' // To apply border radius only to the bottom
               >
-                <Text textColor={colors?.text} textAlign='center' flexWrap='wrap' maxHeight='40px' fontSize='xs'>
+                <Text textColor={'white'} textAlign='center' flexWrap='wrap' maxHeight='40px' fontSize='xs'>
                   {item?.character?.name}
                 </Text>
               </Box>
@@ -264,7 +278,7 @@ console.log("ini data", data);
                     p='5px'
                     borderRadius='10px' // To apply border radius only to the bottom
                   >
-                    <Text textColor={colors?.text} textAlign='center' flexWrap='wrap' maxHeight='40px' fontSize='xs'>
+                    <Text textColor={'white'} textAlign='center' flexWrap='wrap' maxHeight='40px' fontSize='xs'>
                       {voiceActor?.person?.name}
                     </Text>
                   </Box>
@@ -338,12 +352,12 @@ console.log("ini data", data);
             <Text mb='10px'>Share</Text>
             <Flex flexWrap='wrap' justifyContent='center' gap='10px'>
               <FacebookShareButton url={`${window.location.href}`} quote={'Check out these awesome anime! 🎉📺 #Anime #Recommendations'} hashtag='#jikanime'>
-                <Button colorScheme='facebook' leftIcon={<FaFacebook />}>
+                <Button _hover={{bgColor: `${colors.text}`, textColor: '#0165E1'}} bgColor='#0165E1' cursor='pointer' leftIcon={<FaFacebook />}>
                   Facebook
                 </Button>
               </FacebookShareButton>
               <TwitterShareButton url={`${window.location.href}`} quote={'Check out these awesome anime! 🎉📺 #Anime #Recommendations'} hashtag='#jikanime'>
-                <Button colorScheme='twitter' leftIcon={<FaTwitter />}>
+                <Button _hover={{bgColor: `${colors.text}`, textColor: '#1da1f2'}} bgColor='#1da1f2' cursor='pointer' leftIcon={<FaTwitter />}>
                   Twitter
                 </Button>
               </TwitterShareButton>

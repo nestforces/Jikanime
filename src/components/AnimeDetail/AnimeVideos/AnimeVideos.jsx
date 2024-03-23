@@ -2,7 +2,7 @@ import { Box, Flex, Text, Image, VStack, Button, Card, CardBody, Heading, useCol
 import axios from 'axios';
 import { useEffect, useState } from "react";
 import { useNavigate, } from "react-router-dom";
-import { colors } from "../../../assets/Colors/colors";
+import { getColors } from "../../../assets/Colors/colors";
 
 import { FaRegCirclePlay } from "react-icons/fa6";
 import { IoMdInformationCircle } from "react-icons/io";
@@ -11,7 +11,20 @@ const AnimeVideos = ({malId}) => {
     const [data, setData] = useState([]);
     const navigate = useNavigate();
     const [selectedTrailer, setSelectedTrailer] = useState("");
+    const colors = getColors();
+  
+  useEffect(() => {
+    const handleColorModeChange = () => {
+        // Re-render the component to reflect the updated color mode
+        forceUpdate();
+    };
 
+    window.addEventListener('storage', handleColorModeChange);
+
+    return () => {
+        window.removeEventListener('storage', handleColorModeChange);
+    };
+}, []);
 
     const fetchData = async () => {
         try {
@@ -62,7 +75,7 @@ const AnimeVideos = ({malId}) => {
                                     _hover={{ bgColor: 'rgba(0, 0, 0, 0.8)' }} cursor='pointer'>
                                 <Box position="relative" width="100%" height="100%">
                                     <Box position="absolute" top="50%" left="50%" transform="translate(-50%, -50%)">
-                                        <Text fontSize="xxx-large" onClick={() => setSelectedTrailer(item?.trailer?.embed_url)} textColor={colors.primary} cursor="pointer" _hover={{textColor: `${colors.text}`}}><FaRegCirclePlay /></Text>
+                                        <Text fontSize="xxx-large" onClick={() => setSelectedTrailer(item?.trailer?.embed_url)} textColor={colors.primary} cursor="pointer" _hover={{textColor: 'white'}}><FaRegCirclePlay /></Text>
                                     </Box>
                                 </Box>
                                     

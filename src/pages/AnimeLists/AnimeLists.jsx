@@ -1,9 +1,9 @@
-import { Box, Flex, Text, Image, VStack, Spacer, InputGroup, Input, InputRightElement, Card, CardBody, Heading, useColorModeValue, Stack, Grid } from "@chakra-ui/react";
+import { Box, Flex, Text, Image, VStack, Spacer, InputGroup, Input, InputRightElement, Card, CardBody, Heading, useColorModeValue, Stack, Grid, IconButton } from "@chakra-ui/react";
 import axios from 'axios';
 import { useEffect, useState } from "react";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaSun, FaMoon, } from "react-icons/fa";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { colors } from "../../assets/Colors/colors";
+import { getColors } from "../../assets/Colors/colors";
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar";
 import { PaginationControls } from "../../components/PaginationControls/PaginationControls";
@@ -18,33 +18,70 @@ const AnimeLists = () => {
     const [selectedPage, setSelectedPage] = useState(page);
     const [data1, setData1] = useState([]);
     const [searchParams, setSearchParams] = useSearchParams({ page, pageSize });
+    const [isTopSection, setIsTopSection] = useState(false);
+    const [colorMode, setColorMode] = useState(localStorage.getItem("colorMode") || "dark"); // Retrieve colorMode from local storage
+    const colors = getColors();
+
+  useEffect(() => {
+    const handleColorModeChange = () => {
+        // Re-render the component to reflect the updated color mode
+        forceUpdate();
+    };
+
+    window.addEventListener('storage', handleColorModeChange);
+
+    return () => {
+        window.removeEventListener('storage', handleColorModeChange);
+    };
+}, []);
 
     const fetchData = async () => {
         try {
-            if(typeLists == 'recomendations') {
+            if (typeLists == 'recomendations') {
                 const response = await axios.get(
                     `https://api.jikan.moe/v4/top/anime?page=${page}&limit=${pageSize}`
                 );
                 console.log(response?.data);
                 setData(response?.data?.data);
                 setData1(response?.data?.pagination);
-            } else if(typeLists == 'airingnow'){
+            } else if (typeLists == 'airingnow'){
                 const response = await axios.get(
                     `https://api.jikan.moe/v4/seasons/now?page=${page}&limit=${pageSize}`
                 );
                 console.log(response?.data);
                 setData(response?.data?.data);
                 setData1(response?.data?.pagination);
-            } else if(typeLists == 'upcoming') {
+            } else if (typeLists == 'upcoming') {
                 const response = await axios.get(
                     `https://api.jikan.moe/v4/seasons/upcoming?page=${page}&limit=${pageSize}`
                 );
                 console.log(response?.data);
                 setData(response?.data?.data);
                 setData1(response?.data?.pagination);
-            } else {
+            } else if (tyepeLists == 'topmovies') {
                 const response = await axios.get(
-                `https://api.jikan.moe/v4/anime?page=${page}&limit=${pageSize}&type=movie&min_score=8.5&max_score=10&order_by=score&sort=desc`
+                    `https://api.jikan.moe/v4/anime?page=${page}&limit=${pageSize}&type=movie&min_score=8.5&max_score=10&order_by=score&sort=desc`
+                );
+                console.log(response?.data);
+                setData(response?.data?.data);
+                setData1(response?.data?.pagination);
+            } else if (tyepeLists == 'action') {
+                const response = await axios.get(
+                    `https://api.jikan.moe/v4/anime?page=${page}&limit=${pageSize}&genres=1&min_score=8&max_score=10&order_by=score&sort=desc`
+                );
+                console.log(response?.data);
+                setData(response?.data?.data);
+                setData1(response?.data?.pagination);
+            } else if (tyepeLists == 'romance') {
+                const response = await axios.get(
+                    `https://api.jikan.moe/v4/anime?page=${page}&limit=${pageSize}&genres=22&min_score=8&max_score=10&order_by=score&sort=desc`
+                );
+                console.log(response?.data);
+                setData(response?.data?.data);
+                setData1(response?.data?.pagination);
+            } else if (tyepeLists == 'horror') {
+                const response = await axios.get(
+                    `https://api.jikan.moe/v4/anime?page=${page}&limit=${pageSize}&genres=14&min_score=7&max_score=10&order_by=score&sort=desc`
                 );
                 console.log(response?.data);
                 setData(response?.data?.data);
@@ -83,7 +120,7 @@ const AnimeLists = () => {
             <Box bgColor={colors.background} maxHeight='fit-content' minH='100vh' width='100vw'>
                 
             <Box height='full'>
-            <Navbar />
+            <Navbar isTopSection={isTopSection} colorMode2={colorMode} setColorMode2={setColorMode} />
         
       <Box p='30px' width='100%' >
                 {data?.length > 0 ? 
@@ -96,7 +133,7 @@ const AnimeLists = () => {
             >
                 {data?.map((item, index) => (
                     <>
-                        <Card onClick={(event) => { event.preventDefault(); navigate(`/anime-detail/${item?.mal_id}`); window.location.reload()}} width='auto' height='300px' textColor={colors?.text} key={item.mal_id} bgSize='cover' bgPosition='center' bgImage={item?.images?.jpg?.large_image_url}
+                        <Card onClick={(event) => { event.preventDefault(); navigate(`/anime-detail/${item?.mal_id}`); window.location.reload()}} width='auto' height='300px' textColor={'white'} key={item.mal_id} bgSize='cover' bgPosition='center' bgImage={item?.images?.jpg?.large_image_url}
                             // boxShadow='0px 1px 5px white' 
                             >
                                 <CardBody  bgColor='rgba(0, 0, 0, 0.4)'

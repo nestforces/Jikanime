@@ -2,10 +2,24 @@ import { Box, Flex, Text, Image, VStack, Button, Card, CardBody, Heading, useCol
 import axios from 'axios';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { colors } from "../../assets/Colors/colors";
+import { getColors } from "../../assets/Colors/colors";
 
 
 const Loader = () => {
+    const colors = getColors();
+  
+  useEffect(() => {
+    const handleColorModeChange = () => {
+        // Re-render the component to reflect the updated color mode
+        forceUpdate();
+    };
+
+    window.addEventListener('storage', handleColorModeChange);
+
+    return () => {
+        window.removeEventListener('storage', handleColorModeChange);
+    };
+}, []);
 
     return (
         <>
