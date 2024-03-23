@@ -42,12 +42,14 @@ const AnimeSearchPage = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(
-                `https://api.jikan.moe/v4/anime?q=${keyword}&page=${page}&limit=${pageSize}`
-            );
-            console.log(response?.data);
-            setData(response?.data?.data);
-            setData1(response?.data?.pagination);
+            if(keyword?.length > 0 && keyword != 'null') {
+                const response = await axios.get(
+                    `https://api.jikan.moe/v4/anime?q=${keyword}&page=${page}&limit=${pageSize}`
+                );
+                console.log(response?.data);
+                setData(response?.data?.data);
+                setData1(response?.data?.pagination);
+            }
         } catch (err) {
             console.log(err);
         }
@@ -113,6 +115,8 @@ const AnimeSearchPage = () => {
                                 aria-label="Toggle Dark Mode"
                                 icon={colorMode === "light" ? <FaMoon /> : <FaSun />}
                                 onClick={toggleColorMode}
+                                colorScheme={colorMode === "light" ? 'black' : 'white'}
+                                _hover={{bgColor: colorMode === "light" ? 'black' : 'white', textColor: colorMode === "light" ? 'white' : 'black'}}
                                 variant="ghost"
                             />
                     </Flex>

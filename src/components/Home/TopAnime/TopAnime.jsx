@@ -92,7 +92,7 @@ const TopAnime = () => {
                                     <Text size="sm" css={{ height: '-webkit-min-content', maxHeight: '-webkit-min-content', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' }}>{item?.synopsis}</Text>
                                     <Flex mt='5px' gap ='10px'>
                                         <Button leftIcon={<IoMdInformationCircle />} onClick={() => navigate(`anime-detail/${item?.mal_id}`)} textColor='white' _hover={{textColor: `${colors.primary}`, backgroundColor: 'white'}} backgroundColor={colors.primary}>More Info</Button>
-                                        <Button leftIcon={<FaRegCirclePlay />} onClick={() => setSelectedTrailer(item?.trailer?.embed_url)} textColor={colors.primary} _hover={{textColor: `${'white'}`, backgroundColor: `${colors.primary}`}}>Trailer</Button>
+                                        <Button leftIcon={<FaRegCirclePlay />} onClick={() => setSelectedTrailer(item?.trailer?.embed_url)} textColor={colors.primary} bgColor='white' _hover={{textColor: `${'white'}`, backgroundColor: `${colors.primary}`}}>Trailer</Button>
                                     </Flex>
                                 </Flex>
                                 <Box margin='auto' width='30%'>

@@ -58,28 +58,28 @@ const AnimeLists = () => {
                 console.log(response?.data);
                 setData(response?.data?.data);
                 setData1(response?.data?.pagination);
-            } else if (tyepeLists == 'topmovies') {
+            } else if (typeLists == 'topmovies') {
                 const response = await axios.get(
                     `https://api.jikan.moe/v4/anime?page=${page}&limit=${pageSize}&type=movie&min_score=8.5&max_score=10&order_by=score&sort=desc`
                 );
                 console.log(response?.data);
                 setData(response?.data?.data);
                 setData1(response?.data?.pagination);
-            } else if (tyepeLists == 'action') {
+            } else if (typeLists == 'action') {
                 const response = await axios.get(
                     `https://api.jikan.moe/v4/anime?page=${page}&limit=${pageSize}&genres=1&min_score=8&max_score=10&order_by=score&sort=desc`
                 );
                 console.log(response?.data);
                 setData(response?.data?.data);
                 setData1(response?.data?.pagination);
-            } else if (tyepeLists == 'romance') {
+            } else if (typeLists == 'romance') {
                 const response = await axios.get(
                     `https://api.jikan.moe/v4/anime?page=${page}&limit=${pageSize}&genres=22&min_score=8&max_score=10&order_by=score&sort=desc`
                 );
                 console.log(response?.data);
                 setData(response?.data?.data);
                 setData1(response?.data?.pagination);
-            } else if (tyepeLists == 'horror') {
+            } else if (typeLists == 'horror') {
                 const response = await axios.get(
                     `https://api.jikan.moe/v4/anime?page=${page}&limit=${pageSize}&genres=14&min_score=7&max_score=10&order_by=score&sort=desc`
                 );
