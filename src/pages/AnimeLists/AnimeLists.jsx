@@ -86,6 +86,13 @@ const AnimeLists = () => {
                 console.log(response?.data);
                 setData(response?.data?.data);
                 setData1(response?.data?.pagination);
+            } else if (typeLists == 'awardwinning') {
+                const response = await axios.get(
+                    `https://api.jikan.moe/v4/anime?page=${page}&limit=${pageSize}&genres=46&order_by=score&sort=desc`
+                );
+                console.log(response?.data);
+                setData(response?.data?.data);
+                setData1(response?.data?.pagination);
             }
         } catch (err) {
             console.log(err);

@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import Horror from '../../components/Home/Horror/Horror';
 import Romance from '../../components/Home/Romance/Romance';
 import Action from '../../components/Home/Action/Action';
+import AwardWinning from '../../components/Home/AwardWinning/AwardWinning';
 
 const Home = () => {
   const [topAnimeLoaded, setTopAnimeLoaded] = useState(false);
@@ -24,6 +25,7 @@ const Home = () => {
   const [actionLoaded, setActionLoaded] = useState(false);
   const [romanceLoaded, setRomanceLoaded] = useState(false);
   const [horrorLoaded, setHorrorLoaded] = useState(false);
+  const [awardwinningLoaded, setAwardWinningLoaded] = useState(false);
   const [isTopSection, setIsTopSection] = useState(true);
   const navigate = useNavigate();
   const [colorMode, setColorMode] = useState(localStorage.getItem("colorMode") || "dark"); // Retrieve colorMode from local storage
@@ -109,9 +111,51 @@ const Home = () => {
 
   useEffect(() => {
     if (recomendationsLoaded) {
-      fetchDataForAiringNow();
+      fetchDataForAwardWinning();
     }
   }, [recomendationsLoaded]);
+
+  const fetchDataForAwardWinning = async () => {
+    try {
+      // Fetch data for Upcoming
+      // For example:
+      // const response = await axios.get('upcomingApiEndpoint');
+      // setDataForUpcoming(response.data);
+        
+        setTimeout(() => {
+          setAwardWinningLoaded(true);
+        }, 2000);
+    } catch (error) {
+      console.error('Error fetching data for Upcoming:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (awardwinningLoaded) {
+      fetchDataForMovies();
+    }
+  }, [awardwinningLoaded]);
+
+  const fetchDataForMovies = async () => {
+    try {
+      // Fetch data for Upcoming
+      // For example:
+      // const response = await axios.get('upcomingApiEndpoint');
+      // setDataForUpcoming(response.data);
+        
+        setTimeout(() => {
+          setMoviesLoaded(true);
+        }, 2000);
+    } catch (error) {
+      console.error('Error fetching data for Upcoming:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (moviesLoaded) {
+      fetchDataForAiringNow();
+    }
+  }, [moviesLoaded]);
 
   const fetchDataForAiringNow = async () => {
     try {
@@ -149,30 +193,9 @@ const Home = () => {
 
   useEffect(() => {
     if (upcomingLoaded) {
-      fetchDataForMovies();
-    }
-  }, [upcomingLoaded]);
-
-  const fetchDataForMovies = async () => {
-    try {
-      // Fetch data for Upcoming
-      // For example:
-      // const response = await axios.get('upcomingApiEndpoint');
-      // setDataForUpcoming(response.data);
-        
-        setTimeout(() => {
-          setMoviesLoaded(true);
-        }, 2000);
-    } catch (error) {
-      console.error('Error fetching data for Upcoming:', error);
-    }
-  };
-
-  useEffect(() => {
-    if (moviesLoaded) {
       fetchDataForAction();
     }
-  }, [moviesLoaded]);
+  }, [upcomingLoaded]);
 
   const fetchDataForAction = async () => {
     try {
@@ -250,6 +273,22 @@ const Home = () => {
           </Box>
           <Box>
             <HStack>
+              <Text textColor={colors.text} fontSize='x-large' fontWeight='bold'>Award Winning</Text>
+              <Spacer />
+              <Text textColor={colors.text} cursor='pointer' onClick={() => navigate('anime-lists/awardwinning')}>more</Text>
+            </HStack>
+            {awardwinningLoaded && <AwardWinning />} {!awardwinningLoaded && <Loader />}
+          </Box>
+          <Box>
+            <HStack>
+              <Text textColor={colors.text} fontSize='x-large' fontWeight='bold'>Top Movies</Text>
+              <Spacer />
+              <Text textColor={colors.text} cursor='pointer' onClick={() => navigate('anime-lists/topmovies')}>more</Text>
+            </HStack>
+            {moviesLoaded && <Movies />} {!moviesLoaded && <Loader />}
+          </Box>
+          <Box>
+            <HStack>
               <Text textColor={colors.text} fontSize='x-large' fontWeight='bold'>Airing Now</Text>
               <Spacer />
               <Text textColor={colors.text} cursor='pointer' onClick={() => navigate('anime-lists/airingnow')}>more</Text>
@@ -264,14 +303,7 @@ const Home = () => {
             </HStack>
             {upcomingLoaded && <Upcoming />} {!upcomingLoaded && <Loader />}
           </Box>
-          <Box>
-            <HStack>
-              <Text textColor={colors.text} fontSize='x-large' fontWeight='bold'>Top Movies</Text>
-              <Spacer />
-              <Text textColor={colors.text} cursor='pointer' onClick={() => navigate('anime-lists/topmovies')}>more</Text>
-            </HStack>
-            {moviesLoaded && <Movies />} {!moviesLoaded && <Loader />}
-          </Box>
+          
           <Box>
             <HStack>
               <Text textColor={colors.text} fontSize='x-large' fontWeight='bold'>Action</Text>
