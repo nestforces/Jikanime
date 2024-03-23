@@ -74,7 +74,7 @@ const Navbar = ({ isTopSection, colorMode2, setColorMode2 }) => {
                                 aria-label="Toggle Dark Mode"
                                 icon={colorMode === "light" ? <FaMoon /> : <FaSun />}
                                 onClick={toggleColorMode}
-                                colorScheme={colorMode === "light" ? 'black' : 'white'}
+                                textColor={colorMode === "light" ? 'black' : 'white'}
                                 _hover={{bgColor: colorMode === "light" ? 'black' : 'white', textColor: colorMode === "light" ? 'white' : 'black'}}
                                 variant="ghost"
                             />
