@@ -45,7 +45,7 @@ const TopBox = ({data}) => {
 
                 <Box mt='10px' p='10px' boxShadow="0px 1px 5px gray" bg={colors.backgroundcard} borderRadius='10px'>
                     <Text>Streaming : </Text>
-                   <Flex gap='10px' flexDirection='row' flexWrap='wrap'>
+                   <Flex mb='20px' gap='10px' flexDirection='row' flexWrap='wrap'>
                    {data?.streaming?.length > 0 && data?.streaming?.map((item, index) => (
                         <Text cursor='pointer' textColor={colors.secondary} _hover={{textColor: `${colors.text}`}} onClick={() => window.open(`${item?.url}`, "_blank")}>
                             ● {item?.name}
