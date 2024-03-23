@@ -103,7 +103,7 @@ const AnimeSearchPage = () => {
                 <Flex p='10px' ml='20px' flexDirection='row' bg='transparent'>
                     <Text marginTop={{base: '5px', md: '0px'}} marginBottom='auto' css={{ textShadow: ` -1px -1px 0 #fff,   1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff ` }} fontWeight='bold' fontFamily='fantasy' bg='transparent' fontSize={{base: 'x-large', md: 'xx-large',}} textColor={colors.primary}>JIKANIME</Text>
                     <Spacer />
-                    <Flex flexDirection='row' width={{base: '40%', md: '30%'}} marginRight='10px'>
+                    <Flex flexDirection='row' width={{base: '60%', md: '30%'}} marginRight='10px'>
                         <InputGroup><Input textColor='black' _placeholder={{textColor: 'gray'}} placeholder='Search amazing anime here...' marginTop='10px' marginBottom='auto' height='30px' border='none' bgColor='white' width='100%' value={keyword} onChange={(e) => {setKeyword(e.target.value);}} /><InputRightElement 
                             backgroundColor={'#0049CB'} marginTop='10px' marginBottom='auto' height='30px'
                             pointerEvents={''} cursor='pointer' borderRightRadius='5px' onClick={() => fetchData()} >
